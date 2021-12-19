@@ -22,3 +22,20 @@ export type BoardUpdateData = {
   columns?: Array<Column>;
   id?: string;
 };
+
+export type NewTask = {
+  columnId: string;
+  userId?: string | null;
+  title: string;
+  order: string;
+  description: string;
+};
+
+export type TaskUpdateData = {
+  columnId?: string;
+  boardId?: string;
+  userId?: string;
+  title?: string;
+  order?: string;
+  description?: string;
+};
