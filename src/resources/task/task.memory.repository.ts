@@ -73,11 +73,11 @@ class Tasks {
   }
 
   async deletedUserUpdate(userId: string): Promise<void> {
-    this.data.forEach((element) => {
+    this.data = this.data.map((element):Task => {
       if (element.userId === userId) {
         element.updateUser(null);
-      }
-      return;
+      } 
+      return element;
     });
   }
 }

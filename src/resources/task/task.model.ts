@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { Column, NewTask } from '../../types';
+import { NewTask } from '../../types';
 
 export default class Task {
   columnId: string;

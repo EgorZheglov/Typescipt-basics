@@ -10,6 +10,8 @@ const getTask = (boardId: string, taskId: string): Promise<Task | undefined> =>
 
 const deleteTask = (boardId: string, taskId: string): Promise<string> => taskRepo.deleteTask(boardId, taskId);
 
+const deleteWithBoard = (boardId: string): Promise<void> => taskRepo.deleteWithBoard(boardId);
+
 const updateTask = (
   data: TaskUpdateData,
   boardId: string,
@@ -19,4 +21,6 @@ const updateTask = (
 const createTask = (data: NewTask, boardId: string): Promise<Task> =>
   taskRepo.createTask(data, boardId);
 
-export default { getAll, createTask, updateTask, deleteTask, getTask };
+const removedUserUpdate = (userId: string): Promise<void> => taskRepo.deletedUserUpdate(userId);
+
+export default { getAll, createTask, updateTask, deleteTask, getTask, removedUserUpdate, deleteWithBoard };

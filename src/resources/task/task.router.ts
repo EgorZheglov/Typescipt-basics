@@ -11,11 +11,10 @@ router.get('/:boardId/tasks', async (req: Request, res: Response) => {
 });
 
 router.post('/:boardId/tasks', async (req: Request, res: Response) => {
-  const { title } = req.body;
   const boardId = req.params.boardId;
-  const task = await taskService.createTask(title, boardId);
+  const task = await taskService.createTask(req.body, boardId);
 
-  res.json(task);
+  res.status(201).json(task);
 });
 
 router.get('/:boardId/tasks/:taskId', async (req: Request, res: Response) => {
@@ -35,7 +34,7 @@ router.delete(
     const taskId = req.params.taskId;
     const response = await taskService.deleteTask(boardId, taskId);
 
-    res.send(response);
+    res.status(200).send(response);
   }
 );
 
