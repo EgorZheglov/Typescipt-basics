@@ -38,19 +38,7 @@ router.put('/:id', async (req, res) => {
   const data: UserUpdateData = {};
   const id = req.params.id;
 
-  if (req.body.name) {
-    data.name = req.body.name;
-  }
-
-  if (req.body.login) {
-    data.login = req.body.login;
-  }
-
-  if (req.body.password) {
-    data.password = req.body.password;
-  }
-
-  const user = await usersService.updateUser(data, id);
+  const user = await usersService.updateUser(req.body, id);
 
   if (user) {
     return res.json(User.toResponse(user));

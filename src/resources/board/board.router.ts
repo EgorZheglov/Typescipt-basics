@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { BoardUpdateData } from '../../types';
-import Board from './board.model';
 import boardsService from './board.service';
+import taskRoter from '../task/task.router'
 
 const router: Router = Router();
 
@@ -38,19 +38,13 @@ router.put('/:id', async (req: Request, res: Response) => {
   const data: BoardUpdateData = {};
   const id = req.params.id;
 
-  if (req.body.title) {
-    data.title = req.body.title;
-  }
-
-  if (req.body.columns) {
-    data.columns = req.body.columns;
-  }
-
   const board = await boardsService.updateBoard(data, id);
 
   if (board) {
     return res.json(board);
   }
 });
+
+router.use(taskRoter);
 
 export default router;
