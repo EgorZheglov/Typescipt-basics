@@ -1,0 +1,35 @@
+version: "3"
+services:
+  node: 
+    image: nodejs
+    build: .
+    restart: always
+    volumes:
+      - ./appLogs:/var/lib/appLogs
+    ports: 
+      - 3000:3001
+    depends_on:
+      - db
+    environment:
+      - PORT = 3000
+    networks:
+      - user
+  db:
+    image: pgdb
+    build: ./database/
+    ports: 
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgress
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    networks:
+      - user
+
+networks:
+  user:
+    driver: bridge
+
+    
