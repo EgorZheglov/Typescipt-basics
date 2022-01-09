@@ -1,11 +1,16 @@
-const uuid = require('uuid');
+import { randomUUID } from 'crypto';
 
-class User {
+export default class User {
+  id: string;
+  name: string;
+  login: string;
+  password: string;
+
   constructor({
-    id = uuid(),
+    id = randomUUID().substring(26),
     name = 'USER',
     login = 'user',
-    password = 'P@55w0rd'
+    password = 'P@55w0rd',
   } = {}) {
     this.id = id;
     this.name = name;
@@ -13,10 +18,8 @@ class User {
     this.password = password;
   }
 
-  static toResponse(user) {
+  static toResponse(user: User): object {
     const { id, name, login } = user;
     return { id, name, login };
   }
 }
-
-module.exports = User;
