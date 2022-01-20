@@ -1,25 +1,17 @@
-import { randomUUID } from 'crypto';
+import { Entity, BaseEntity, Column, PrimaryColumn } from 'typeorm';
 
-export default class User {
+@Entity('user')
+export default class User extends BaseEntity {
+
+  @PrimaryColumn()
   id: string;
+
+  @Column()
   name: string;
+
+  @Column()
   login: string;
+
+  @Column()
   password: string;
-
-  constructor({
-    id = randomUUID().substring(26),
-    name = 'USER',
-    login = 'user',
-    password = 'P@55w0rd',
-  } = {}) {
-    this.id = id;
-    this.name = name;
-    this.login = login;
-    this.password = password;
-  }
-
-  static toResponse(user: User): object {
-    const { id, name, login } = user;
-    return { id, name, login };
-  }
 }

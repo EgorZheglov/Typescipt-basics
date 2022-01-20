@@ -3,7 +3,8 @@ import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
 import userRouter from './resources/users/user.router';
 import path from 'path/posix';
-import boardRouter from './resources/board/board.router'
+import boardRouter from './resources/board/board.router';
+
 
 const app: Application = express();
 const swaggerDocument: swaggerUI.JsonObject = YAML.load(
