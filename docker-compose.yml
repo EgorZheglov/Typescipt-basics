@@ -1,0 +1,38 @@
+version: "3"
+services:
+  node: 
+    image: nodejs
+    build: .
+    restart: always
+    volumes:
+      - ./appLogs:/var/lib/appLogs
+    ports: 
+      - 3000:3001
+    depends_on:
+      - db
+    environment:
+      - ENV=DOCKER
+    networks:
+      - user
+  db:
+    container_name: "db"
+    image: pgdb
+    build: ./database/
+    ports: 
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGDATA: /var/lib/postgressql/data/pgdata
+    restart: always 
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    networks:
+      - user
+
+networks:
+  user:
+    
+
+    

@@ -1,47 +1,38 @@
-import User from './board.model';
 import { BoardUpdateData } from '../../types';
 import Board from './board.model';
+import { randomUUID } from 'crypto';
 
 class Boards {
-  private data: Array<Board> = [];
-
-  constructor() {}
 
   async getAll(): Promise<Array<Board>> {
-    // TODO: mock implementation. should be replaced during task development
-    return this.data;
+    const [boards, number] = await Board.findAndCount();
+    return boards;
   }
 
-  async getBoard(ID: string): Promise<Board | undefined> {
-    return this.data.find((board) => board.id === ID);
+  async getBoard(ID: string): Promise<any> {
+    //TODO: understand why at the end of id... i killed 3 days
+    return await Board.find({ board_id:ID.slice(0, 10) })
   }
 
   async createBoard(boardTitle: string): Promise<Board> {
-    const newBoard = new Board(boardTitle);
-    this.data.push(newBoard);
-    return Promise.resolve(newBoard);
+    const board = await Board.create({ title: boardTitle, board_id: randomUUID().substring(26) })
+    await Board.save(board);
+
+    return board;
   }
 
   async deleteBoard(ID: string): Promise<string> {
-    this.data = this.data.filter((board) => board.id !== ID);
-    return Promise.resolve('board deleted');
+    await Board.delete(ID);
+    return 'board deleted';
   }
 
   async updateBoard(
     boardInfo: BoardUpdateData,
     ID: string
-  ): Promise<User | undefined> {
-    const boardIndex = this.data.findIndex((board) => board.id === ID);
+  ): Promise<Board | undefined> {
 
-    if (boardInfo.title) {
-      this.data[boardIndex].title = boardInfo.title;
-    }
-
-    if (boardInfo.columns) {
-      this.data[boardIndex].columns = boardInfo.columns;
-    }
-
-    return this.data[boardIndex];
+    await Board.update({board_id: ID}, boardInfo);
+    return await Board.findOne(ID);
   }
 }
 
