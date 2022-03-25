@@ -1,14 +1,16 @@
-import { randomUUID } from 'crypto';
-import { Column } from '../../types';
+import { Entity, BaseEntity, Column, PrimaryColumn } from 'typeorm';
 
-export default class Board {
-  id: string;
+@Entity('board')
+export default class Board extends BaseEntity{
+
+  @PrimaryColumn()
+  board_id: string;
+
+  @Column()
   title: string;
-  columns: Array<Column>;
 
-  constructor(title = 'Test') {
-    this.id = randomUUID().substring(26);
-    this.title = title;
-    this.columns = []
-  }
+  @Column({
+    default: 'there gonna be columns', //there is missing prop in task
+  })
+  columns: string;
 }

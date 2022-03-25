@@ -19,13 +19,12 @@ export type Column = {
 
 export type BoardUpdateData = {
   title?: string;
-  columns?: Array<Column>;
-  id?: string;
+  columns?: string;
 };
 
 export type NewTask = {
   columnId: string;
-  userId?: string | null;
+  userId?: string;
   title: string;
   order: string;
   description: string;

@@ -1,26 +1,30 @@
-import { randomUUID } from 'crypto';
-import { NewTask } from '../../types';
+import { Entity, BaseEntity, Column, PrimaryColumn } from 'typeorm';
 
-export default class Task {
-  columnId: string;
-  boardId: string;
-  userId: string | null;
-  title: string;
+
+@Entity('task')
+export default class Task extends BaseEntity {
+  @PrimaryColumn()
   id: string;
+
+  @Column()
+  title: string;
+
+  @Column({
+    default: 'coming soon'
+  })
+  columnId: string;
+
+  @Column({
+    default: 'null',
+  })
+  userId: string;
+
+  @Column()
+  boardId: string;
+
+  @Column()
   order: string;
+
+  @Column()
   description: string;
-
-  constructor(data: NewTask, boardId: string) {
-    this.id = randomUUID().substring(26);
-    this.title = data.title;
-    this.columnId = data.columnId;
-    this.userId = data.userId ? data.userId : null;
-    this.boardId = boardId;
-    this.order = data.order;
-    this.description = data.description;
-  }
-
-  updateUser (value: string | null) {
-    this.userId = value;
-  }
 }

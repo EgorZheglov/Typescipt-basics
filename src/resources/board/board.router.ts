@@ -25,6 +25,8 @@ router.get('/:id', async (req: Request, res: Response) => {
 
   if (board) {
     res.json(board);
+  } else {
+    res.status(404).json('Not found');
   }
 });
 
@@ -33,17 +35,18 @@ router.delete('/:id', async (req: Request, res: Response) => {
   const response = await boardsService.deleteBoard(id);
   await taskService.deleteWithBoard(id);
 
-  res.status(204).send(response);
+  res.status(204).send('deleted');
 });
 
 router.put('/:id', async (req: Request, res: Response) => {
-  const data: BoardUpdateData = {};
   const id = req.params.id;
 
-  const board = await boardsService.updateBoard(data, id);
+  const board = await boardsService.updateBoard(req.body, id);
 
   if (board) {
     return res.json(board);
+  } else {
+    res.status(404).json('Not found');
   }
 });
 
