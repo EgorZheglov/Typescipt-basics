@@ -1,25 +1,29 @@
-import { Entity, BaseEntity, Column, PrimaryColumn } from 'typeorm';
-
+import {
+  Entity,
+  BaseEntity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+} from 'typeorm';
+import { TaskStatus } from '../../types';
+import User from '../users/user.model';
+import Board from '../board/board.model';
 
 @Entity('task')
 export default class Task extends BaseEntity {
-  @PrimaryColumn()
-  id: string;
+  @PrimaryGeneratedColumn('uuid')
+  task_id: string;
 
   @Column()
   title: string;
 
-  @Column({
-    default: 'coming soon'
-  })
-  columnId: string;
+  @Column({ default: TaskStatus.TODO })
+  status: TaskStatus;
 
-  @Column({
-    default: 'null',
-  })
-  userId: string;
+  @ManyToOne(() => User, (user) => user.tasks, { onDelete: 'SET NULL' })
+  user: User;
 
-  @Column()
+  @ManyToOne(() => Board, (board) => board.tasks)
   boardId: string;
 
   @Column()

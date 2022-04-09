@@ -12,14 +12,13 @@ const ormConfig: ConnectionOptions = {
     password: config.POSTGRES_PASSWORD,
     database: config.POSTGRES_DB,
     logging: false,
-    synchronize: false,
-    migrations: ['src/migrations/**/*.ts'],
-    migrationsRun: false,
+    synchronize: true,
     entities: [
         User,
         Board,
         Task,
-    ]
+    ],
+    migrations: ["../migrations/*.ts"],
 }
 
 export default ormConfig 

@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const id = req.params.id;
-  const user = await usersService.getUser(id);
+  const user = await usersService.getUserById(id);
 
   if (user) {
     res.status(200).json(restrictResponse(user));
@@ -33,7 +33,7 @@ router.get('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const id = req.params.id;
   await usersService.deleteUser(id);
-  await taskService.removedUserUpdate(id);
+  // await taskService.removedUserUpdate(id);
 
   res.status(204).send('User deleted');
 });

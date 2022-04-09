@@ -1,16 +1,20 @@
-import { Entity, BaseEntity, Column, PrimaryColumn } from 'typeorm';
+import {
+  Entity,
+  BaseEntity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+} from 'typeorm';
+import Task from '../task/task.model';
 
 @Entity('board')
-export default class Board extends BaseEntity{
-
-  @PrimaryColumn()
+export default class Board extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
   board_id: string;
 
   @Column()
   title: string;
 
-  @Column({
-    default: 'there gonna be columns', //there is missing prop in task
-  })
-  columns: string;
+  @OneToMany(() => Task, (task) => task.boardId)
+  tasks: Task;
 }

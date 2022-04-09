@@ -13,6 +13,7 @@ router.get('/', async (req: Request, res: Response) => {
 });
 
 router.post('/', async (req: Request, res: Response) => {
+  console.log(1);
   const { title } = req.body;
   const board = await boardsService.createBoard(title);
 

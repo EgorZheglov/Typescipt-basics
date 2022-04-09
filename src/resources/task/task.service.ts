@@ -21,6 +21,6 @@ const updateTask = (
 const createTask = (data: NewTask, boardId: string): Promise<Task> =>
   taskRepo.createTask(data, boardId);
 
-const removedUserUpdate = (userId: string): Promise<void> => taskRepo.deletedUserUpdate(userId);
+// const removedUserUpdate = (userId: string): Promise<void> => taskRepo.deletedUserUpdate(userId);
 
-export default { getAll, createTask, updateTask, deleteTask, getTask, removedUserUpdate, deleteWithBoard };
+export default { getAll, createTask, updateTask, deleteTask, getTask, deleteWithBoard };

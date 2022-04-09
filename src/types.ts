@@ -11,15 +11,8 @@ export type UserUpdateData = {
   id?: string;
 };
 
-export type Column = {
-  title: string;
-  order: string;
-  id: string;
-};
-
 export type BoardUpdateData = {
-  title?: string;
-  columns?: string;
+  title: string;
 };
 
 export type NewTask = {
@@ -38,3 +31,10 @@ export type TaskUpdateData = {
   order?: string;
   description?: string;
 };
+
+export enum TaskStatus {
+  TODO = 'to do',
+  INPROGRESS = 'in progress',
+  INREVIEW = 'in review',
+  DONE = 'done',
+}

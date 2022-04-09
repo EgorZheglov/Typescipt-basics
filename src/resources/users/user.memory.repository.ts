@@ -4,17 +4,20 @@ import { randomUUID } from 'crypto';
 
 class Users {
   async getAll(): Promise<Array<User>> {
-    // TODO: mock implementation. should be replaced during task development
     const [users, number] = await User.findAndCount();
-    return users
+    return users;
   }
 
-  async getUser(ID: string): Promise<User | undefined> {
-   return await User.findOne(ID);
+  async getUserById(ID: string): Promise<User | undefined> {
+    return await User.findOne(ID);
+  }
+
+  async getUserByLogin(login: string): Promise<User | undefined> {
+    return await User.findOne({ login: login });
   }
 
   async createUser(userInfo: NewUser): Promise<User> {
-    const user = await User.create({ ...userInfo,  id: randomUUID().substring(26) })
+    const user = await User.create({ ...userInfo });
     await User.save(user);
 
     return user;
@@ -29,10 +32,9 @@ class Users {
     userInfo: UserUpdateData,
     ID: string
   ): Promise<User | undefined> {
-    await User.update({id: ID}, userInfo);
+    await User.update({ id: ID }, userInfo);
     return await User.findOne(ID);
   }
 }
-
 
 export default new Users();

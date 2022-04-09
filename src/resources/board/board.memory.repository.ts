@@ -15,7 +15,7 @@ class Boards {
   }
 
   async createBoard(boardTitle: string): Promise<Board> {
-    const board = await Board.create({ title: boardTitle, board_id: randomUUID().substring(26) })
+    const board = await Board.create({ title: boardTitle })
     await Board.save(board);
 
     return board;

@@ -14,17 +14,17 @@ class Tasks {
   }
 
   async getTask(boardId: string, taskId: string): Promise<Task | undefined> {
-    return Task.findOne({ id: taskId, boardId: boardId })
+    return Task.findOne({ task_id: taskId, boardId: boardId })
   }
 
   async createTask(taskData: NewTask, boardId: string): Promise<Task> {
-    const task = Task.create({...taskData, id: randomUUID().substring(26), boardId: boardId});
+    const task = Task.create({...taskData, boardId: boardId});
     await Task.save(task);
     return task;
   }
 
   async deleteTask(boardId: string, taskId: string): Promise<string> {
-    Task.delete({ id: taskId, boardId: boardId })
+    Task.delete({ task_id: taskId, boardId: boardId })
     return Promise.resolve('task deleted');
   }
 
@@ -33,8 +33,8 @@ class Tasks {
     boardId: string,
     taskId: string
   ): Promise<Task | undefined> {
-    await Task.update({ id: taskId, boardId: boardId }, taskInfo);
-    return await Task.findOne({ id: taskId, boardId: boardId });
+    await Task.update({ task_id: taskId, boardId: boardId }, taskInfo);
+    return await Task.findOne({ task_id: taskId, boardId: boardId });
   }
 
   async deleteWithBoard(boardId: string): Promise<void> {
@@ -42,13 +42,13 @@ class Tasks {
     return;
   }
 
-  async deletedUserUpdate(userId: string): Promise<void> {
-    const [tasks, number] = await Task.findAndCount({ userId: userId });
-    tasks.forEach(async (task) => {
-      await Task.update({ id: task.id }, { userId: 'null' });
-    });
-    return;
-  }
+  // async deletedUserUpdate(userId: string): Promise<void> {
+  //   const [tasks, number] = await Task.findAndCount({ userId: userId });
+  //   tasks.forEach(async (task) => {
+  //     await Task.update({ task_id: task.task_id }, { userId: 'null' });
+  //   });
+  //   return;
+  // }
 }
 
 export default new Tasks();

@@ -1,15 +1,24 @@
-import { Entity, BaseEntity, Column, PrimaryColumn } from 'typeorm';
+import {
+  Entity,
+  BaseEntity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+} from 'typeorm';
+import Task from '../task/task.model';
 
 @Entity('user')
 export default class User extends BaseEntity {
-
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   name: string;
 
-  @Column()
+  @OneToMany(() => Task, (task) => task.user)
+  tasks: Task[];
+
+  @Column({ unique: true })
   login: string;
 
   @Column()
