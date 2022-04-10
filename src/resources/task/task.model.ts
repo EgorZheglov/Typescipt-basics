@@ -23,7 +23,7 @@ export default class Task extends BaseEntity {
   @ManyToOne(() => User, (user) => user.tasks, { onDelete: 'SET NULL' })
   user: User;
 
-  @ManyToOne(() => Board, (board) => board.tasks)
+  @ManyToOne(() => Board, (board) => board.tasks, { onDelete: 'CASCADE'})
   boardId: string;
 
   @Column()

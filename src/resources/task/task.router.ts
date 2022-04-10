@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import { taskCreateMW, taskUpdateMW } from '../../middlwares/task-middlware';
 import taskService from './task.service';
 
 const router: Router = Router();
@@ -10,12 +11,16 @@ router.get('/:boardId/tasks', async (req: Request, res: Response) => {
   res.json(tasks);
 });
 
-router.post('/:boardId/tasks', async (req: Request, res: Response) => {
-  const boardId = req.params.boardId;
-  const task = await taskService.createTask(req.body, boardId);
+router.post(
+  '/:boardId/tasks',
+  taskCreateMW,
+  async (req: Request, res: Response) => {
+    const boardId = req.params.boardId;
+    const task = await taskService.createTask(req.body, boardId);
 
-  res.status(201).json(task);
-});
+    res.status(201).json(task);
+  }
+);
 
 router.get('/:boardId/tasks/:taskId', async (req: Request, res: Response) => {
   const boardId = req.params.boardId;
@@ -38,14 +43,18 @@ router.delete(
   }
 );
 
-router.put('/:boardId/tasks/:taskId', async (req: Request, res: Response) => {
-  const boardId = req.params.boardId;
-  const taskId = req.params.taskId;
-  const task = await taskService.updateTask(req.body, boardId, taskId);
+router.put(
+  '/:boardId/tasks/:taskId',
+  taskUpdateMW,
+  async (req: Request, res: Response) => {
+    const boardId = req.params.boardId;
+    const taskId = req.params.taskId;
+    const task = await taskService.updateTask(req.body, boardId, taskId);
 
-  if (task) {
-    return res.json(task);
+    if (task) {
+      return res.json(task);
+    }
   }
-});
+);
 
 export default router;

@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { BoardUpdateData } from '../../types';
+import { boardMw } from '../../middlwares/board-middleware';
 import boardsService from './board.service';
 import taskRouter from '../task/task.router';
 import taskService from '../task/task.service';
@@ -12,8 +12,7 @@ router.get('/', async (req: Request, res: Response) => {
   res.json(boards);
 });
 
-router.post('/', async (req: Request, res: Response) => {
-  console.log(1);
+router.post('/', boardMw, async (req: Request, res: Response) => {
   const { title } = req.body;
   const board = await boardsService.createBoard(title);
 
@@ -39,7 +38,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
   res.status(204).send('deleted');
 });
 
-router.put('/:id', async (req: Request, res: Response) => {
+router.put('/:id', boardMw, async (req: Request, res: Response) => {
   const id = req.params.id;
 
   const board = await boardsService.updateBoard(req.body, id);

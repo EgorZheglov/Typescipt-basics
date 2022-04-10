@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import usersService from './user.service';
-import taskService from '../task/task.service';
 import restrictResponse from '../../libs/restrict-response';
+import { userCreateMW, userUpdateMW } from '../../middlwares/user-middleware';
 
 const router: Router = Router();
 
@@ -11,8 +11,8 @@ router.get('/', async (req, res) => {
   res.status(200).send(users.map(restrictResponse));
 });
 
-router.post('/', async (req, res) => {
-
+router.post('/', userCreateMW, async (req, res) => {
+  //soon will be using only for admins
   const { name, login, password } = req.body;
   const user = await usersService.createUser({ name, login, password });
 
@@ -38,7 +38,7 @@ router.delete('/:id', async (req, res) => {
   res.status(204).send('User deleted');
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', userUpdateMW, async (req, res) => {
   const id = req.params.id;
 
   const user = await usersService.updateUser(req.body, id);

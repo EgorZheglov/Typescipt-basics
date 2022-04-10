@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import to from 'await-to-js';
+import { userCreateMW } from '../../middlwares/user-middleware';
 import encrypt from '../../libs/encrypt';
 import { NewUser } from '../../types';
 import userService from '../users/user.service';
@@ -9,6 +10,7 @@ const signup = Router();
 
 signup.post(
   '/signup',
+  userCreateMW,
   async (req: Request, res: Response, next: NextFunction) => {
     const payload: NewUser = {
       login: req.body.login,

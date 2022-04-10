@@ -4,11 +4,12 @@ import encrypt from '../../libs/encrypt';
 import { NewUser } from '../../types';
 import userService from '../users/user.service';
 import restrictResponse from '../../libs/restrict-response';
-
+import { userLoginMW } from '../../middlwares/user-middleware';
 const login = Router();
 
 login.post(
   '/login',
+  userLoginMW,
   async (req: Request, res: Response, next: NextFunction) => {
     const { login, password } = req.body;
 
