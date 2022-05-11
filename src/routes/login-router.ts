@@ -18,7 +18,6 @@ login.post(
     );
 
     if (err) {
-      //TODO: validate error
       res.send(err);
     }
 

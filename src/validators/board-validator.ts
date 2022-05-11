@@ -9,3 +9,5 @@ export const boardCreateValidator = (data: any): Joi.ValidationResult => {
 
   return schema.validate(data);
 };
+
+

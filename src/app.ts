@@ -27,4 +27,5 @@ app.use('/boards', boardRouter);
 app.use('/users', userRouter);
 
 app.use(errorHandler);
+
 export default app;
