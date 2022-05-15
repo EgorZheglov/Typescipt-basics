@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
-import Task from '../task/task.model';
+import Task from './task-model';
 
 @Entity('user')
 export default class User extends BaseEntity {
@@ -15,7 +15,7 @@ export default class User extends BaseEntity {
   @Column()
   name: string;
 
-  @OneToMany(() => Task, (task) => task.user)
+  @OneToMany(() => Task, (task) => task.user, { onDelete: 'SET NULL' })
   tasks: Task[];
 
   @Column({ unique: true })

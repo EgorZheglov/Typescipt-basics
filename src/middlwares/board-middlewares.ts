@@ -8,5 +8,7 @@ export const boardMw = (req: Request, res: Response, next: NextFunction) => {
 
   if (result.error) {
     return next(errmessages.BAD_REQUEST);
+  } else {
+    return next();
   }
 };

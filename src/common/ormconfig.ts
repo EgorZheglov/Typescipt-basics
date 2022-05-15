@@ -1,8 +1,8 @@
 import { ConnectionOptions, Migration } from "typeorm";
 import config from "./config";
-import User from "../resources/users/user.model";
-import Board from "../resources/board/board.model";
-import Task from "../resources/task/task.model";
+import User from "../db/models/user-model";
+import Board from "../db/models/board-model";
+import Task from "../db/models/task-model";
 
 const ormConfig: ConnectionOptions = {
     type: 'postgres',

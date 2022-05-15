@@ -3,6 +3,7 @@ import * as jwt from './libs/jwt';
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   const authorizationHeader = req.headers.authorization;
+
   if (!authorizationHeader) {
     return next('SHOULD CONTAINS TOKEN');
   }

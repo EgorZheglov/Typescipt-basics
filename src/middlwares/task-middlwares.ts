@@ -15,6 +15,8 @@ export const taskCreateMW = (
 
   if (result.error) {
     return next(errmessages.BAD_REQUEST);
+  } else {
+    return next();
   }
 };
 
@@ -26,7 +28,9 @@ export const taskUpdateMW = (
   const payload = { ...req.body };
   const result = taskUpdateValidator(payload);
 
-  if (result.error) {
+  if (result.error || payload === {}) {
     return next(errmessages.BAD_REQUEST);
+  } else {
+    return next();
   }
 };

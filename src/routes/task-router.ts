@@ -1,12 +1,25 @@
 import { Request, Response, Router } from 'express';
-import { taskCreateMW, taskUpdateMW } from '../../middlwares/task-middlware';
-import taskService from './task.service';
+import { taskCreateMW, taskUpdateMW } from '../middlwares/task-middlwares';
+import {
+  getAll,
+  createTask,
+  updateTask,
+  deleteTask,
+  getTask,
+} from '../controllers/task-controller';
+import to from 'await-to-js';
+import errmessages from '../common/errmessages';
 
 const router: Router = Router();
 
 router.get('/:boardId/tasks', async (req: Request, res: Response) => {
   const boardId = req.params.boardId;
-  const tasks = await taskService.getAll(boardId);
+  const [err, tasks] = await to(getAll(boardId));
+
+  if (err) {
+    console.log(err);
+    return res.status(500).send(errmessages.ERROR_DURING_EXECUTING);
+  }
   // map user fields to exclude secret fields like "password"
   res.json(tasks);
 });
@@ -16,7 +29,7 @@ router.post(
   taskCreateMW,
   async (req: Request, res: Response) => {
     const boardId = req.params.boardId;
-    const task = await taskService.createTask(req.body, boardId);
+    const task = await createTask(req.body, boardId);
 
     res.status(201).json(task);
   }
@@ -25,7 +38,7 @@ router.post(
 router.get('/:boardId/tasks/:taskId', async (req: Request, res: Response) => {
   const boardId = req.params.boardId;
   const taskId = req.params.taskId;
-  const task = await taskService.getTask(boardId, taskId);
+  const task = await getTask(boardId, taskId);
 
   if (task) {
     res.json(task);
@@ -37,7 +50,7 @@ router.delete(
   async (req: Request, res: Response) => {
     const boardId = req.params.boardId;
     const taskId = req.params.taskId;
-    const response = await taskService.deleteTask(boardId, taskId);
+    const response = await deleteTask(boardId, taskId);
 
     res.status(200).send(response);
   }
@@ -49,7 +62,7 @@ router.put(
   async (req: Request, res: Response) => {
     const boardId = req.params.boardId;
     const taskId = req.params.taskId;
-    const task = await taskService.updateTask(req.body, boardId, taskId);
+    const task = await updateTask(req.body, boardId, taskId);
 
     if (task) {
       return res.json(task);

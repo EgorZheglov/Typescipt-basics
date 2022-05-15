@@ -1,4 +1,4 @@
-export  default {
+export default {
   CANNOT_CREATE_USER: 'Cannot create user',
   CANNOT_UPDATE_USER: 'Cannot update user',
   CONNECTION_NOT_CREATED: "Connection wasn't created",
@@ -14,7 +14,6 @@ export  default {
   BAD_REQUEST: 'Something is wrong with request data',
   ERROR_LOGIN: 'Something went wrong during login',
   ERROR_SIGNUP: 'Something went wrong during signup',
-  ERROR_LOGOUT: 'Something went wrong during logout'
+  ERROR_LOGOUT: 'Something went wrong during logout',
+  USER_ALREADY_EXISTS: 'User with same login already exists',
 };
-
-

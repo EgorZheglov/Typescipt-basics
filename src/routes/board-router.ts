@@ -1,27 +1,36 @@
 import { Request, Response, Router } from 'express';
-import { boardMw } from '../../middlwares/board-middleware';
-import boardsService from './board.service';
-import taskRouter from '../task/task.router';
-import taskService from '../task/task.service';
+import { boardMw } from '../middlwares/board-middlewares';
+import {
+  getAll,
+  createBoard,
+  getBoard,
+  deleteBoard,
+  updateBoard,
+} from '../controllers/board-controller';
+import taskRouter from './task-router';
+import to from 'await-to-js';
+import errmessages from '../common/errmessages';
 
 const router: Router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  const boards = await boardsService.getAll();
-  // map user fields to exclude secret fields like "password"
+  const [err, boards] = await to(getAll());
+  if (err) {
+    return res.status(500).send(errmessages.ERROR_DURING_EXECUTING);
+  }
   res.json(boards);
 });
 
 router.post('/', boardMw, async (req: Request, res: Response) => {
   const { title } = req.body;
-  const board = await boardsService.createBoard(title);
+  const board = await createBoard(title);
 
   res.status(201).json(board);
 });
 
 router.get('/:id', async (req: Request, res: Response) => {
   const id = req.params.id;
-  const board = await boardsService.getBoard(id);
+  const [err, board] = await to(getBoard(id));
 
   if (board) {
     res.json(board);
@@ -32,8 +41,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 
 router.delete('/:id', async (req: Request, res: Response) => {
   const id = req.params.id;
-  const response = await boardsService.deleteBoard(id);
-  await taskService.deleteWithBoard(id);
+  const response = await deleteBoard(id);
 
   res.status(204).send('deleted');
 });
@@ -41,10 +49,10 @@ router.delete('/:id', async (req: Request, res: Response) => {
 router.put('/:id', boardMw, async (req: Request, res: Response) => {
   const id = req.params.id;
 
-  const board = await boardsService.updateBoard(req.body, id);
+  const board = await updateBoard(req.body, id);
 
   if (board) {
-    return res.json(board);
+    return res.status(200).send(board);
   } else {
     res.status(404).json('Not found');
   }

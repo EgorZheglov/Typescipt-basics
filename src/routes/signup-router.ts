@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import to from 'await-to-js';
-import { userCreateMW } from '../../middlwares/user-middleware';
-import encrypt from '../../libs/encrypt';
-import { NewUser } from '../../types';
-import userService from '../users/user.service';
-import restrictResponse from '../../libs/restrict-response';
+import { userCreateMW } from '../middlwares/user-middlewares';
+import encrypt from '../libs/encrypt';
+import { NewUser } from '../types';
+import { signupUser } from '../services/auth-service';
 
 const signup = Router();
 
@@ -18,13 +17,14 @@ signup.post(
       password: encrypt(req.body.password),
     };
 
-    const [err, user] = await to(userService.createUser(payload));
+    const [err, user] = await to(signupUser(payload));
 
     if (err) {
-      //TODO: validate error
+      //TODO: next(err) coz can be different errors and statuses durning signup
+      return res.status(500).send(err);
     }
 
-    return res.status(201).send(restrictResponse(user!));
+    return res.status(201).send(user!);
   }
 );
 

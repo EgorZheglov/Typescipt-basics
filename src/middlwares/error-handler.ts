@@ -7,4 +7,6 @@ export default (
   next: NextFunction
 ) => {
   console.log('get Error', err);
+  res.status(400).send(err);
+  //soon will get all exceptions and check for Errors/statuses/messages then send it to user
 };

@@ -6,8 +6,8 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { TaskStatus } from '../../types';
-import User from '../users/user.model';
-import Board from '../board/board.model';
+import User from './user-model';
+import Board from './board-model';
 
 @Entity('task')
 export default class Task extends BaseEntity {
@@ -23,7 +23,7 @@ export default class Task extends BaseEntity {
   @ManyToOne(() => User, (user) => user.tasks, { onDelete: 'SET NULL' })
   user: User;
 
-  @ManyToOne(() => Board, (board) => board.tasks, { onDelete: 'CASCADE'})
+  @ManyToOne(() => Board, (board) => board.tasks, { onDelete: 'NO ACTION' })
   boardId: string;
 
   @Column()

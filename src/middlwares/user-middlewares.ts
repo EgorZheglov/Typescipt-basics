@@ -16,6 +16,8 @@ export const userLoginMW = (
 
   if (result.error) {
     return next(errmessages.BAD_REQUEST);
+  } else {
+    return next();
   }
 };
 
@@ -29,6 +31,8 @@ export const userUpdateMW = (
 
   if (result.error) {
     return next(errmessages.BAD_REQUEST);
+  } else {
+    return next();
   }
 };
 
@@ -42,5 +46,7 @@ export const userCreateMW = (
 
   if (result.error) {
     return next(errmessages.BAD_REQUEST);
+  } else {
+    return next();
   }
 };
