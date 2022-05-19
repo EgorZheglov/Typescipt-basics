@@ -16,6 +16,6 @@ export default class Board extends BaseEntity {
   @Column()
   title: string;
 
-  @OneToMany(() => Task, (task) => task.boardId, { onDelete: 'CASCADE' })
+  @OneToMany(() => Task, (task) => task.board_id, { onDelete: 'CASCADE' })
   tasks: Task[];
 }

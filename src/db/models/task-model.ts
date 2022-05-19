@@ -24,7 +24,7 @@ export default class Task extends BaseEntity {
   user: User;
 
   @ManyToOne(() => Board, (board) => board.tasks, { onDelete: 'NO ACTION' })
-  boardId: string;
+  board_id: string;
 
   @Column()
   order: string;
