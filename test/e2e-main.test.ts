@@ -3,6 +3,8 @@ import app from '../src/app';
 import { v4 as uuidv4 } from 'uuid';
 import { deleteUser } from '../src/controllers/user-controller';
 import { TaskStatus } from '../src/types';
+import Task from '../src/db/models/task-model';
+import to from 'await-to-js';
 
 interface AccessHeaders {
   headers: {
@@ -96,7 +98,6 @@ describe('Test /signup endpoint', (): void => {
       path + '/boards/' + boardId + '/tasks/',
       {
         title: 'testTask',
-        order: 'testtTask',
         description: 'testTask',
       },
       headers
@@ -107,14 +108,41 @@ describe('Test /signup endpoint', (): void => {
 
     taskId = result.data.task_id;
 
-    // const resultFromGet = await axios.get(
-    //   path + '/boards/' + boardId + '/tasks/' + taskId,
-    //   headers
-    // );
+    const resultFromGet = await axios.get(
+      path + '/boards/' + boardId + '/tasks/' + taskId,
+      headers
+    );
 
-    // expect(resultFromGet.status).toBe(200);
-    // expect(resultFromGet.data[0].title).toEqual('testTask');
-    // expect(resultFromGet.data[0].description).toEqual('testTask');
-    // expect(resultFromGet.data[0].status).toEqual(TaskStatus.TODO);
+    expect(resultFromGet.status).toBe(200);
+    expect(resultFromGet.data.title).toEqual('testTask');
+    expect(resultFromGet.data.description).toEqual('testTask');
+    expect(resultFromGet.data.status).toEqual(TaskStatus.TODO);
+    expect(resultFromGet.data.user).toEqual(null);
+
+    const resultFromPut = await axios.put(
+      path + '/boards/' + boardId + '/tasks/' + taskId,
+      {
+        user: userId,
+        status: TaskStatus.INPROGRESS,
+      },
+      headers
+    );
+
+    expect(resultFromPut.status).toBe(201);
+    expect(resultFromPut.data.status).toEqual(TaskStatus.INPROGRESS);
+    expect(resultFromPut.data.user.id).toEqual(userId);
+  });
+
+  it('should delete board and cascade delete task', async (): Promise<void> => {
+    const resultFromDelete = await axios.delete(
+      path + '/boards/' + boardId,
+      headers
+    );
+
+    expect(resultFromDelete.status).toBe(204);
+
+    const [err, task] = await to(Task.findOne({ task_id: taskId }));
+
+    expect(task).toBeFalsy();
   });
 });

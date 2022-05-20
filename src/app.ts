@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction, Application } from 'express';
+import express, { Application } from 'express';
 import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
 import { createConnection, Connection } from 'typeorm';

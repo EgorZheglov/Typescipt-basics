@@ -28,8 +28,11 @@ router.post(
   '/:boardId/tasks',
   taskCreateMW,
   async (req: Request, res: Response) => {
-    const boardId = req.params.boardId;
-    const task = await createTask(req.body, boardId);
+    const board = req.params.boardId;
+
+    const [err, task] = await to(createTask({ ...req.body, board }));
+
+    if (err) return res.status(500).send(err);
 
     res.status(201).json(task);
   }
@@ -62,10 +65,12 @@ router.put(
   async (req: Request, res: Response) => {
     const boardId = req.params.boardId;
     const taskId = req.params.taskId;
-    const task = await updateTask(req.body, boardId, taskId);
+    const [err, task] = await to(updateTask(req.body, boardId, taskId));
 
-    if (task) {
-      return res.json(task);
+    if (err) {
+      return res.status(500).send(errmessages.CANNOT_UPDATE_TASK);
+    } else {
+      return res.status(201).send(task);
     }
   }
 );

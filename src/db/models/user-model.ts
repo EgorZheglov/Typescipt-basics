@@ -15,7 +15,7 @@ export default class User extends BaseEntity {
   @Column()
   name: string;
 
-  @OneToMany(() => Task, (task) => task.user, { onDelete: 'SET NULL' })
+  @OneToMany(() => Task, (task) => task.user)
   tasks: Task[];
 
   @Column({ unique: true })

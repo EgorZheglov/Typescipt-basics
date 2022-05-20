@@ -13,12 +13,8 @@ const ormConfig: ConnectionOptions = {
   database: config.POSTGRES_DB,
   logging: false,
   synchronize: true,
-  entities: [
-    'src/db/models/user-model/**/*{.js,.ts}',
-    'src/db/models/board-model/**/*{.js,.ts}',
-    'src/db/models/task-model/**/*{.js,.ts}',
-  ],
-  migrations: ['../../dist/db/migrations/**/*.js'],
+  entities: [User, Board, Task],
+  migrations: ['../db/migrations/*.ts'],
   cli: {
     entitiesDir: '../../dist/db/models',
     migrationsDir: '../../dist/db/migrations',

@@ -2,7 +2,7 @@ import User from '../db/models/user-model';
 import { NewUser, UserUpdateData } from '../types';
 
 async function getAll(): Promise<Array<User>> {
-  const [users, number] = await User.findAndCount();
+  const users = await User.find({ relations: ['tasks'] });
   return users;
 }
 

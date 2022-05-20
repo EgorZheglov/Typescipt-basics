@@ -16,10 +16,9 @@ export type BoardUpdateData = {
 };
 
 export type NewTask = {
-  columnId: string;
-  userId?: string;
+  board: string;
+  user?: string;
   title: string;
-  order: string;
   description: string;
 };
 

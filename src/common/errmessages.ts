@@ -1,6 +1,6 @@
 export default {
   CANNOT_CREATE_USER: 'Cannot create user',
-  CANNOT_UPDATE_USER: 'Cannot update user',
+  CANNOT_UPDATE_TASK: 'Cannot update task',
   CONNECTION_NOT_CREATED: "Connection wasn't created",
   ERROR: 'Error',
   ERROR_DURING_EXECUTING: 'Error during executing',

@@ -13,7 +13,8 @@
     "build": "rimraf dist && tsc",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "jest",
-    "migrate": "typeorm migrations:generate -n"
+    "migrate": "npx ts-node ./node_modules/typeorm/cli.js migration:generate -d src/db/migrations --config src/common/ormconfig.ts",
+    "seed":"ts-node src/db/seedDatabase.ts"
   },
   "keywords": [
     "rs",

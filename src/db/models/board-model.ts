@@ -4,7 +4,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-//  JoinColumn,
+  //  JoinColumn,
 } from 'typeorm';
 import Task from './task-model';
 
@@ -16,6 +16,9 @@ export default class Board extends BaseEntity {
   @Column()
   title: string;
 
-  @OneToMany(() => Task, (task) => task.board_id, { onDelete: 'CASCADE' })
+  @OneToMany(() => Task, (task) => task.board, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   tasks: Task[];
 }
