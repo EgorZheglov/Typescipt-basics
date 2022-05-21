@@ -65,8 +65,11 @@ If you're using VSCode, you can get a better developer experience from integrati
 npm run lint
 ```
 
-### Debugging in VSCode
+### Functional
 
-Press <kbd>F5</kbd> to debug.
+Virtual kanban.
+Authorized user can create Boards, tasks, related to 
+certain board. And assign other users(or assign to himself) for task.
+All task have 4 statuses, named by progress of the task.
 
-For more information, visit: https://code.visualstudio.com/docs/editor/debugging
+soon different roles will be added.
