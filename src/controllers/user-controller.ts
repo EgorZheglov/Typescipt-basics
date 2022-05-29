@@ -1,5 +1,7 @@
 import User from '../db/models/user-model';
 import { NewUser, UserUpdateData } from '../types';
+import * as bcrypt from 'bcrypt';
+import config from '../common/config';
 
 async function getAll(): Promise<Array<User>> {
   const users = await User.find({ relations: ['tasks'] });
@@ -30,6 +32,12 @@ async function updateUser(
   userInfo: UserUpdateData,
   ID: string
 ): Promise<User | undefined> {
+  if (userInfo.password) {
+    userInfo.password = await bcrypt.hash(
+      userInfo.password,
+      config.SALT_OR_ROUNDS
+    );
+  }
   await User.update({ id: ID }, userInfo);
   return await User.findOne(ID);
 }
