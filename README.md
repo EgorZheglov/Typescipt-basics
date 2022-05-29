@@ -18,7 +18,7 @@ npm install
 ## Running application
 
 ```
-npm start
+npm run dev
 ```
 
 After starting the app on port (3000 as default) you can open
