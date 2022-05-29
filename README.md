@@ -1,5 +1,3 @@
-# RS School REST service
-
 ## Prerequisites
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
@@ -70,4 +68,9 @@ Authorized user can create Boards, tasks, related to
 certain board. And assign other users(or assign to himself) for task.
 All task have 4 statuses, named by progress of the task.
 
-soon different roles will be added.
+soon different roles & rights will be added.
+
+## NestJs
+You can also try version of this project using nestJs:
+https://github.com/EgorZheglov/nest_basics
+
