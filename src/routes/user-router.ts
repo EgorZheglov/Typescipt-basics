@@ -50,9 +50,9 @@ router.put('/:id', userUpdateMW, async (req, res) => {
   const user = await updateUser(req.body, id);
 
   if (user) {
-    return res.json(restrictResponse(user));
+    return res.send(user);
   } else {
-    res.status(404).json('Not found');
+    res.status(404).send('Not found');
   }
 });
 

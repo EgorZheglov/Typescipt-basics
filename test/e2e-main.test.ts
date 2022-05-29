@@ -52,7 +52,7 @@ describe('Test /signup endpoint', (): void => {
       password: testData.password,
     });
 
-    expect(result.status).toBe(200);
+    expect(result.status).toBe(201);
     expect(result.data.access_token).toBeTruthy();
     expect(result.data.access_token.length).toBeGreaterThan(0);
 
@@ -128,7 +128,7 @@ describe('Test /signup endpoint', (): void => {
       headers
     );
 
-    expect(resultFromPut.status).toBe(201);
+    expect(resultFromPut.status).toBe(200);
     expect(resultFromPut.data.status).toEqual(TaskStatus.INPROGRESS);
     expect(resultFromPut.data.user.id).toEqual(userId);
   });

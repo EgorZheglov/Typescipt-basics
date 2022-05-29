@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import to from 'await-to-js';
 import { userCreateMW } from '../middlwares/user-middlewares';
-import encrypt from '../libs/encrypt';
 import { NewUser } from '../types';
 import { signupUser } from '../services/auth-service';
 
@@ -11,11 +10,7 @@ signup.post(
   '/signup',
   userCreateMW,
   async (req: Request, res: Response, next: NextFunction) => {
-    const payload: NewUser = {
-      login: req.body.login,
-      name: req.body.name,
-      password: encrypt(req.body.password),
-    };
+    const payload: NewUser = req.body;
 
     const [err, user] = await to(signupUser(payload));
 

@@ -4,6 +4,7 @@ import { createUser, findByLogin } from '../controllers/user-controller';
 import * as jwt from '../libs/jwt';
 import { NewUser } from '../types';
 import User from '../db/models/user-model';
+import * as bcrypt from 'bcrypt';
 
 interface PostgresError {
   driverError: {
@@ -21,7 +22,9 @@ export async function loginUser(
     throw errmessages.ERROR_LOGIN;
   }
 
-  if (user.password !== password) {
+  const compared = await bcrypt.compare(password, user.password);
+
+  if (!compared) {
     throw errmessages.ERROR_LOGIN;
   }
 

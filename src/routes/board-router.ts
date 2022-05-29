@@ -25,7 +25,7 @@ router.post('/', boardMw, async (req: Request, res: Response) => {
   const { title } = req.body;
   const board = await createBoard(title);
 
-  res.status(201).json(board);
+  res.status(201).send(board);
 });
 
 router.get('/:id', async (req: Request, res: Response) => {
@@ -33,9 +33,9 @@ router.get('/:id', async (req: Request, res: Response) => {
   const [err, board] = await to(getBoard(id));
 
   if (board) {
-    res.json(board);
+    res.send(board);
   } else {
-    res.status(404).json('Not found');
+    res.status(404).send('Not found');
   }
 });
 

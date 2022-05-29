@@ -5,7 +5,6 @@ import { createUser } from '../controllers/user-controller';
 import { createTask } from '../controllers/task-controller';
 import { faker } from '@faker-js/faker';
 import { randomUUID } from 'crypto';
-import encrypt from '../libs/encrypt';
 import Board from './models/board-model';
 import User from './models/user-model';
 import Task from './models/task-model';
@@ -32,7 +31,7 @@ createConnection(ormConfig)
       const user = await createUser({
         name: faker.name.firstName(),
         login: randomUUID(),
-        password: encrypt('test'),
+        password: 'test',
       });
       users.push(user);
     }

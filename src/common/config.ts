@@ -14,4 +14,5 @@ export default {
   POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
   POSTGRES_DB: process.env.POSTGRES_DB,
   JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET,
+  SALT_OR_ROUNDS: process.env.SALT_OR_ROUNDS ? process.env.SALT_OR_ROUNDS : 10,
 };

@@ -70,7 +70,7 @@ router.put(
     if (err) {
       return res.status(500).send(errmessages.CANNOT_UPDATE_TASK);
     } else {
-      return res.status(201).send(task);
+      return res.status(200).send(task);
     }
   }
 );

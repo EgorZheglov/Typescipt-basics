@@ -14,7 +14,7 @@
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "jest",
     "migrate": "npx ts-node ./node_modules/typeorm/cli.js migration:generate -d src/db/migrations --config src/common/ormconfig.ts",
-    "seed":"ts-node src/db/seedDatabase.ts"
+    "seed": "ts-node src/db/seedDatabase.ts"
   },
   "keywords": [
     "rs",
@@ -58,6 +58,8 @@
     "yamljs": "0.3.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.1.0",
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
     "@types/jest": "^27.5.1",
     "@types/swagger-ui-express": "^4.1.3",

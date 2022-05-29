@@ -16,7 +16,7 @@ async function getTask(
 }
 
 async function createTask(taskData: NewTask): Promise<Task> {
-  const task = await Task.create(taskData);
+  const task = Task.create(taskData);
   const [err, result] = await to(Task.save(task));
 
   if (err) {
@@ -37,7 +37,6 @@ async function updateTask(
   taskId: string
 ): Promise<Task | undefined> {
   const task = await Task.update({ task_id: taskId, board: boardId }, taskInfo);
-  console.log(task);
   return await Task.findOne({ task_id: taskId, board: boardId });
 }
 
